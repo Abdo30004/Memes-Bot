@@ -19,7 +19,8 @@ table.setHeading("Commands", "category","Load");
 let table2 = new ascii("Events");
 table2.setHeading("Event", "file","Load");
 
-
+const express = require('express');
+const app = express();
 const ap = AutoPoster(process.env.topgg, client);
 ap.on('posted', () => {
   console.log('Posted stats to Top.gg!')
@@ -27,16 +28,19 @@ ap.on('posted', () => {
 
 const webhook = new top.Webhook('topggonly');
 
+app.listen(3000,()=>{
+console.log(`port : 3000`)
+})
+app.get("/",(req,res)=>{
+res.json("hellow world")
+})
 
-webhook.login('/dblwebhook', '3000'); 
-webhook.on('vote', vote => {
-  let votes=client.channels.cache.get("851119328040583199");
+app.post('/dblwebhook', webhook.advanced(), (req, res) => {
+    let vote=req.vote
+    let votes=client.channels.cache.get("851119328040583199");
   let msg=`**شكرا لك <@${vote.user}> للتصويت للبوت :rose:**`
   votes.send(msg)
 });
-
-
-
 
 
 
