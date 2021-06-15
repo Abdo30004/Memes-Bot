@@ -31,8 +31,6 @@ app.listen(process.env.PORT||3000,()=>{
 console.log(`port : 3000`)
 })
 app.get("/",(req,res)=>{
-  var ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress 
-  console.log(`New request ip :${ip}`);
 res.json("hellow world")
 })
 
