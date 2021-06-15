@@ -27,7 +27,7 @@ ap.on('posted', () => {
 
 const webhook = new top.Webhook('topggonly');
 
-app.listen(3000,()=>{
+app.listen(process.env.PORT||3000,()=>{
 console.log(`port : 3000`)
 })
 app.get("/",(req,res)=>{
