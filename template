@@ -1,0 +1,14 @@
+module.exports = {
+    async execute(client, message, args) { 
+ 
+ 
+   },
+};
+module.exports.help = {
+  name: '',
+  aliases: [],
+  category: '',
+  description: "",
+  test :false,
+  cooldown: 1,
+}
