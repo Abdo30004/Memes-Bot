@@ -4,8 +4,8 @@
   "description": "memes bot project",
   "main": "index.js",
   "engines": {
-    "node": "12.16.1",
-    npm: "6.14.12"
+    "npm":"6.14.12",
+    "node": "12.16.1"
   },
   "dependencies": {
     "@canvacord/emoji-parser": "^1.0.1",
