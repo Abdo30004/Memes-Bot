@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "memes bot project",
   "main": "index.js",
+  "engines": {
+    "node": "12.16.1"
+  },
   "dependencies": {
     "@canvacord/emoji-parser": "^1.0.1",
     "@top-gg/sdk": "^3.1.1",
