@@ -19,7 +19,6 @@ table.setHeading("Commands", "category","Load");
 let table2 = new ascii("Events");
 table2.setHeading("Event", "file","Load");
 
-const express = require('express');
 const app = express();
 const ap = AutoPoster(process.env.topgg, client);
 ap.on('posted', () => {
