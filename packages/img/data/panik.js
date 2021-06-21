@@ -1,6 +1,6 @@
 const { wrapText } = require('../functions/canvas')
 const path = require('path');
-const { createCanvas, loadImage } = require('canvas');
+const { createCanvas, loadImage,registerFont } = require('canvas');
 registerFont(path.join(__dirname, '..', 'assets', 'fonts', 'Almarai-Regular.ttf'), { family: 'Noto' });
 registerFont(path.join(__dirname, '..', 'assets', 'fonts', 'Noto-CJK.otf'), { family: 'Noto' });
 const { fillTextWithTwemoji } = require('node-canvas-with-twemoji-and-discord-emoji');
