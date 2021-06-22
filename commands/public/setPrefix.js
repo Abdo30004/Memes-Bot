@@ -22,10 +22,11 @@ module.exports = {
         await newData.save()
       } else {
         await schema.deleteMany({ id: message.guild.id });
-        await schema.updateOne({
+        let newData = await schema.create({
           id: message.guild.id,
           Prefix: prefix,
         })
+        await newData.save()
       }
       let embed = new Discord.MessageEmbed()
         .setDescription(`**تم تعيين \`${prefix}\` كبرفكس البوت الجديد**`)
