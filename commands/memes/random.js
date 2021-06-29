@@ -13,7 +13,13 @@ module.exports = {
       .setThumbnail("https://media.discordapp.net/attachments/754299533264945153/835520481959346196/icon.png")
 
       .setImage(await memes[random.int((min = 0), (max = memes.length))])
-    message.author.send(embed).catch(err => { if (message.guild.me.hasPermission("ADD_REACTIONS")) { return message.react("❌") } else { return } }).then(async msg => {
+    try{
+    let msg=await message.author.send(embed);
+    } catch (err){
+     message.channel.send(`**للأسف خاصك مغلق لا أستطيع إرسال الميمز :x: **`);
+      return;
+    }
+    await message.channel.send(`**تم إرسال الميمز في خاصك ✅**`)
       try {
         await msg.react('😂')
       } catch (err) {
@@ -26,8 +32,8 @@ module.exports = {
         msg.edit(embed)
 
 
-      })
-    })
+      });
+    
 
   },
 };
