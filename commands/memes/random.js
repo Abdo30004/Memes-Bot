@@ -23,7 +23,7 @@ module.exports = {
       try {
         await msg.react('😂')
       } catch (err) {
-        return
+        return console.error(err)
       }
       const memeFilter = (reaction, user) => reaction.emoji.name === '😂' && user.id === message.author.id;
       const meme = msg.createReactionCollector(memeFilter, { time: 2000000 });
