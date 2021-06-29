@@ -11,13 +11,16 @@ module.exports = {
         `**لا تملك الصلاحيات الكافية`
       );
     const prefix = args.join(" ");
+    let data = await schema.findOne({ id: message.guild.id });
   if (!prefix) {
 return message.channel.send('**من فضلك اختر بادئة**');
-} else if(prefix===client.config.prefix){
+} else if(prefix===client.config.prefix && !data){
 return message.channel.send('**البرفكس الذي إخترته \`-\` هو البرفكس الإفتراضي للبوت**');
+}else if(prefix===client.config.prefix && data){
+  await schema.deleteMany({ id: message.guild.id });
+return message.channel.send("**تم إعادة تعيين البرفكس للقيمة الإفتراضية `-`**");
 }
     try {
-      let data = await schema.findOne({ id: message.guild.id });
       if (!data) {
         let newData = await schema.create({
           id: message.guild.id,
