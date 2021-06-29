@@ -3,7 +3,7 @@ const Discord = require("discord.js")
 module.exports = {
 
   async execute(client, message, args) {
-    if (!message.guild.me.hasPermission("EMBED_LINKS") && !message.guild.me.permissionsIn(message.channel).has("EMBED_LINKS")) {
+    if (!message.guild.me.permissionsIn(message.channel).has("EMBED_LINKS")) {
       return message.channel.send("لا املك الصلاحيات الكافية")
     }
     if (!message.member.hasPermission('ADMINISTRATOR'))
@@ -11,7 +11,11 @@ module.exports = {
         `**لا تملك الصلاحيات الكافية`
       );
     const prefix = args.join(" ");
-    if (!prefix) return message.channel.send('من فضلك اختر بادئة');
+  if (!prefix) {
+return message.channel.send('**من فضلك اختر بادئة**');
+} else if(prefix===client.config.prefix){
+return message.channel.send('**البرفكس الذي إخترته \`-\` هو البرفكس الإفتراضي للبوت**');
+}
     try {
       let data = await schema.findOne({ id: message.guild.id });
       if (!data) {
@@ -20,7 +24,9 @@ module.exports = {
           Prefix: prefix,
         })
         await newData.save()
-      } else {
+      } else if(prefix===data.Prefix){
+return message.channel.send(`**البرفكس الذي إخترته \`${prefix}\` هو البرفكس الحالي للبوت**`);
+} else{
         await schema.deleteMany({ id: message.guild.id });
         let newData = await schema.create({
           id: message.guild.id,
