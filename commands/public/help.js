@@ -11,7 +11,7 @@ module.exports = {
     if (prefixdata === null) {
       prefix = client.config.prefix;
     } else {
-      prefix = prefixdata.Prefix;
+      prefix = prefixdata.Prefix.split("").map(item=>`\\${item}`).join("");
     }
     const devs = client.config.devs
     if (!args[0]) {
