@@ -7,14 +7,12 @@ module.exports = {
     let embed = new Discord.MessageEmbed()
       .setTitle("😂 ميمز عشوائية")
       .setColor("#ffd400")
-      .addField('** «——————»  **', '** **')
-      .addField('**اضغط على الايموجي مرتين للتنقل بين الميمز**', '** **')
-      .setDescription(`[**رابط الموقع**](https://arb-memes.com/)`)
+      .addField('**اضغط على الايموجي 😂 للتنقل بين الميمز**', '** **')
       .setThumbnail("https://media.discordapp.net/attachments/754299533264945153/835520481959346196/icon.png")
 
       .setImage(await memes[random.int((min = 0), (max = memes.length))])
     try{
-    let msg=await message.author.send(embed);
+    var msg=await message.author.send(embed);
     } catch (err){
      message.channel.send(`**للأسف خاصك مغلق لا أستطيع إرسال الميمز :x: **`);
       return;
