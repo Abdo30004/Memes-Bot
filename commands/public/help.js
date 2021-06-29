@@ -52,7 +52,7 @@ module.exports = {
         } catch (err) {
           aliases = "لا توجد الإختصارات"
         }
-        var help = await command.help.help
+        var image = await `https://api.abderrahmane300.repl.co/memes-bot/${command.help.name}.gif`
         var description = command.help.description
         if (!name) return
         if (!aliases) { aliases = "لا توجد الإختصارات" }
@@ -61,7 +61,7 @@ module.exports = {
           .setTitle(`**Help for command ${name}**`)
           .addField("**Aliases | الإختصارات**", aliases)
           .addField("**Description | الوصف**", `**${description}**`)
-          .setImage(help)
+          .setImage(image ? image : null)
           .setColor('#ffd400')
         message.channel.send(embed)
 
