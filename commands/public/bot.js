@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-
+const pretty=require("pretty-ms");
 module.exports = {
   execute: async (client, message, args) => {
     if (!message.guild.me.hasPermission("EMBED_LINKS")) return message.channel.send("لا املك الصلاحيات الكافية")
@@ -15,10 +15,12 @@ module.exports = {
       .addField(`**Bot users**`, client.guilds.cache.map(guild=>guild.memberCount).reduce((a,b)=>a+b),true)
       .addField(`**Bot guilds**`, client.guilds.cache.size,true)
       .addField(`**Bot Commands**`, client.commands.filter(command=>command.help.category && command.help.category !== "devs").size,true)
-      .addField(`**Bot guilds**`, client.guilds.cache.size,true)
       .setThumbnail(client.user.displayAvatarURL({ format: "png" }))
       .addField(`**Bot language**`, `**Java script (node.js)**`,true)
       .addField(`**Bot library**`, `**Discord.js**`,true)
+      .addField("**Node.js Version**", `${process.version}`, true)
+      .addField("**System**", `${process.platform}`, true)
+      .addField("**Uptime**", `${pretty(client.uptime)}`)
       .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true, format: "png" }))
     message.channel.send(embed)
   }
