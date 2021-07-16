@@ -5,6 +5,9 @@ const db = require("quick.db");
 module.exports = {
 
   execute: async (client, message, args) => {
+    if(message.author.id!==="760952710383665192"){
+   return;
+   }
     const owner = client.config.devs
     if (owner.includes(message.author.id)) {
       try {
