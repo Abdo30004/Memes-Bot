@@ -8,14 +8,18 @@ module.exports = {
     const devs = client.config.devs
 
     let embed = new Discord.MessageEmbed()
-      .setColor('RED')
+      .setColor("#040404")
       .setTitle('**Bot Info**')
       .addField(`**Bot owners**`, devs.sort((a, b) => b - a).map(devs => `<@!${devs}>`).join(" |"), true)
-      .addField(`**Bot users**`, client.users.cache.size)
-      .addField(`**Bot guilds**`, client.guilds.cache.size)
+      .addField(`**Bot Developer**`,"<@!760952710383665192>", true)
+      .addField(`**Bot users**`, client.guilds.cache.map(guild=>guild.memberCount).reduce((a,b)=>a+b),true)
+      .addField(`**Bot guilds**`, client.guilds.cache.size,true)
+      .addField(`**Bot Commands**`, client.commands.filter(command=>command.help.category && command.help.category !== "devs").size,true)
+      .addField(`**Bot guilds**`, client.guilds.cache.size,true)
       .setThumbnail(client.user.displayAvatarURL({ format: "png" }))
-      .addField(`**Bot language**`, `**java script(node.js)**`)
-      .addField(`**Bot library**`, `**discord.js**`).setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true, format: "png" }))
+      .addField(`**Bot language**`, `**Java script (node.js)**`,true)
+      .addField(`**Bot library**`, `**Discord.js**`,true)
+      .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true, format: "png" }))
     message.channel.send(embed)
   }
 }
