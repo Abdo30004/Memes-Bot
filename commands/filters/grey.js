@@ -4,10 +4,16 @@ module.exports = {
   async execute(client, message, args) {
     if (!message.guild.me.hasPermission("ATTACH_FILES")) return message.channel.send("لا املك الصلاحيات الكافية")
     let user = message.mentions.members.first() || message.guild.members.cache.get(args[0]) || message.member
+    
     let avatar =await user.user.displayAvatarURL({ format: "png", size: 2048 });
-    let img = await new DIG.Greyscale().getImage(avatar);
+    let photo=message.attachments.first()?.proxyURL
+    var image=photo;
+    if(!photo){
+    image=avatar;
+    }
+     var img = await new DIG.Greyscale().getImage(image);
     let attach = new Discord.MessageAttachment(img, `${user.user.username} greyscale.png`);
-    await message.channel.send(attach)
+    await message.channel.send(attach);
 
 
   },
