@@ -20,7 +20,11 @@ module.exports = {
         {return message.channel.send("**are you stupid ?**")
         }
         }
-        let evaled = eval(code);
+        try{
+        var evaled =await eval(code);
+        } catch(err){
+message.channel.send(`\`ERROR\` \`\`\`xl\n${err}\n\`\`\``);
+}
         if (typeof evaled !== "string")
           evaled = inspect(evaled)
         let embed = new Discord.MessageEmbed()
