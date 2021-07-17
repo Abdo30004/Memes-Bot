@@ -11,7 +11,7 @@ module.exports = {
     var level=10;
     if(!photo){
     image=avatar;
-     if(!isNaN(Number(args.join(""))){
+     if(!isNaN(Number(args.join("")))) {
 level=Number(args.join("");
 }
     }
