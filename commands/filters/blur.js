@@ -15,10 +15,10 @@ module.exports = {
 level=Number(args.join(""));
 }
     }
-  if(level>200){
-level=200
+  if(level>150){
+level=150
 }
-     var img = await new DIG.Blur().getImage(image,level);
+     var img = await new DIG.Blur().getImage(image,level||10);
     let attach = new Discord.MessageAttachment(img, `${user.user.username} blur.png`);
     await message.channel.send(attach);
 
