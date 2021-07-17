@@ -24,6 +24,7 @@ module.exports = {
         var evaled =await eval(code);
         } catch(err){
 message.channel.send(`\`ERROR\` \`\`\`xl\n${err}\n\`\`\``);
+          return;
 }
         if (typeof evaled !== "string")
           evaled = inspect(evaled)
@@ -42,6 +43,7 @@ message.channel.send(`\`ERROR\` \`\`\`xl\n${err}\n\`\`\``);
       } catch (err) {
 
         message.channel.send(`\`ERROR\` \`\`\`xl\n${err}\n\`\`\``);
+        return;
       }
     }
   }
