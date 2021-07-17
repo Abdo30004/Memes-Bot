@@ -12,7 +12,7 @@ module.exports = {
     if(!photo){
     image=avatar;
      if(!isNaN(Number(args.join("")))) {
-level=Number(args.join("");
+level=Number(args.join(""));
 }
     }
   if(level>200){
