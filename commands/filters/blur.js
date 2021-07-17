@@ -8,10 +8,12 @@ module.exports = {
     let avatar =await user.user.displayAvatarURL({ format: "png", size: 2048 });
     let photo=message.attachments.first()?.proxyURL
     var image=photo;
+    var level=10;
     if(!photo){
     image=avatar;
+     level=isNaN(Number(args.join("")))?10:Number(args.join(""))
     }
-     var img = await new DIG.Blur().getImage(image,10);
+     var img = await new DIG.Blur().getImage(image,level);
     let attach = new Discord.MessageAttachment(img, `${user.user.username} blur.png`);
     await message.channel.send(attach);
 
