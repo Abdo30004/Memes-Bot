@@ -11,8 +11,13 @@ module.exports = {
     var level=10;
     if(!photo){
     image=avatar;
-     level=isNaN(Number(args.join("")))?10:Number(args.join(""))
+     if(!isNaN(Number(args.join(""))){
+level=Number(args.join("");
+}
     }
+  if(level>200){
+level=200
+}
      var img = await new DIG.Blur().getImage(image,level);
     let attach = new Discord.MessageAttachment(img, `${user.user.username} blur.png`);
     await message.channel.send(attach);
