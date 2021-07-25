@@ -73,7 +73,7 @@ module.exports = {
           `\`${prefix}${cmd.help.name}\` **${cmd.help.description}**\n\n`
         ).join(" ")}`)
         .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true, format: "png" }))
-      reaction.users.remove(user.id)
+      reaction.users.remove(user.id).catch(err=>null)
       msg.edit(embed)
     })
     } else {
