@@ -29,11 +29,11 @@ module.exports = {
 `)
     let msg = await message.channel.send(mainE)
     try {
-      await msg.react("853250870400385044")
-      await msg.react("853250871139237898")
+      await msg.react("👥")
+      await msg.react("😂")
       await msg.react("✨")
       await msg.react("🎮")
-      await msg.react("853250920879882301")
+      await msg.react("🧙")
     } catch (err) {
       return
     }
@@ -62,6 +62,9 @@ module.exports = {
           break;
         case "circle":
           category = "devs"
+          break;
+         default :
+          category = "public"
           break;
       }
       var embed = new Discord.MessageEmbed()
