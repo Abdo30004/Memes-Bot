@@ -106,11 +106,12 @@ module.exports = {
     }
   },
 };
+
 module.exports.help = {
-  name: 'new-help',
-  aliases: [],
-  category: 'devs',
-  description: "",
+  name: 'help',
+  aliases: ["اوامر","الاوامر"],
+  category: 'public',
+  description: "لعرض اوامر البوت",
   test: false,
   cooldown: 1,
 }
