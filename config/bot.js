@@ -2,7 +2,7 @@ module.exports = {
   prefix: "-",
   png: "https://media.discordapp.net/attachments/754299533264945153/835520481959346196/icon.png",
   site: "https://arb-memes.com",
-  invite: "https://discord.com/api/oauth2/authorize?client_id=836645198271610950&permissions=378945&scope=bot",
+  invite: "https://discord.com/api/oauth2/authorize?client_id=836645198271610950&permissions=126016&scope=applications.commands%20bot",
   devs: [
     "760952710383665192",
     "304668206344437762",
