@@ -72,7 +72,7 @@ module.exports = {
 
 };
 module.exports.help = {
-  name: "help",
+  name: "Oldhelp",
   category: 'devs',
   cooldown: 7,
   description: "لعرض اوامر البوت",
