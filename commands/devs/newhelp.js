@@ -1,22 +1,30 @@
 
-const Discord = require("discord.js")
+const Discord = require("discord.js");
+const schema = require('../../models/prefix');
+
 module.exports = {
   async execute(client, message, args) {
     String.prototype.title = function() {
       return this.replace(/\w\S*/g, function(txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
     };
     var dev = client.config.devs.includes(message.author.id)
-    const prefix = client.config.prefix
+    var prefixdata = await schema.findOne({ id: message.guild.id });
+    var prefix;
+    if (prefixdata === null) {
+      prefix = client.config.prefix;
+    } else {
+      prefix = prefixdata.Prefix
+    }
     var list = [...new Set(client.commands.filter(cmd => cmd.help.category && cmd.help.category != "devs").map(cmd => cmd.help.category))]
     if(!args[0]){
     let mainE = new Discord.MessageEmbed()
       .setTitle(`**Commands Help**`)
       .setDescription(`
-**Public Commands** : <a:public:853250870400385044>: \n
-**Memes Commands** : <a:memes:853250871139237898>\n
+**Public Commands** : :busts_in_silhouette: \n
+**Memes Commands** : :joy: \n
 **Fun Commands** : :sparkles: \n
-**Games Commands** :video_game:\n
-**Filters Commands** <:filters:853250920879882301> \n
+**Games Commands** :video_game: \n
+**Filters Commands** :mage: \n
 
 `)
     let msg = await message.channel.send(mainE)
@@ -30,16 +38,17 @@ module.exports = {
       return
     }
     if (dev) {
-      await msg.react("852213932001460294")    }
+      await msg.react("852213932001460294")    
+    }
     let filter = (reaction, user) => user.id == message.author.id
     const collector = msg.createReactionCollector(filter, { time: 60 * 60 * 1000 })
     collector.on("collect", (reaction, user) => {
       var category;
       switch (reaction.emoji.name) {
-        case "public":
+        case "👥":
           category = "public"
           break;
-        case "memes":
+        case "😂":
           category = "memes"
           break;
         case "✨":
@@ -48,7 +57,7 @@ module.exports = {
         case "🎮":
           category = "games"
           break;
-        case "filters":
+        case "🧙":
           category = "filters"
           break;
         case "circle":
@@ -77,16 +86,16 @@ module.exports = {
         } catch (err) {
           aliases = "لا توجد الإختصارات"
         }
-        var help = await command.help.help
+        var image = await `https://api.abderrahmane300.repl.co/memes-bot/${command.help.name}.gif`
         var description = command.help.description
         if (!name) return
         if (!aliases) { aliases = "لا توجد الإختصارات" }
-        if (!description||description=="None") { description = "لا يوجد وصف" }
+        if (!description) { description = "لا يوجد وصف" }
         let embed = new Discord.MessageEmbed()
           .setTitle(`**Help for command ${name}**`)
           .addField("**Aliases | الإختصارات**", aliases)
           .addField("**Description | الوصف**", `**${description}**`)
-          .setImage(help)
+          .setImage(image ? image : null)
           .setColor('#ffd400')
         message.channel.send(embed)
 
