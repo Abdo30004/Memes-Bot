@@ -1,27 +1,29 @@
 const Img = require('../../packages/img/index');
 const Discord = require("discord.js");
+const i18n = require("i18n");
 module.exports = {
+  async execute(client, message, css, lang) {
+    i18n.setLocale(lang);
+    var args = message.content.split(" ").slice(1).join(" ").split(/\|/);
+    let yeah = args[1]
+    let nah = args[0]
+    if (!nah || !yeah) {
+      message.reply(i18n.__("commands.fun.drake", { prefix: client.guildsConfig.get(message.guild.id).prefix || "-" }))
+      return
+    }
+    let img = await Img.drake(nah.trim(), yeah.trim());
+    let attach = new Discord.MessageAttachment(img, `Drake_Meme.png`);
+      await message.reply({ files: [attach] })
 
-    async execute(client, message) { 
-      if (!message.guild.me.hasPermission("ATTACH_FILES")&&!message.guild.me.permissionsIn(message.channel).has("ATTACH_FILES")) return message.channel.send("لا املك الصلاحيات الكافية")
- var args=message.content.split(" ").slice(1).join(" ").split("|");
-    let yeah=args[1]
-    let nah=args[0]
-if(!nah||!yeah){
-  return message.channel.send(`**من فضلك استعمل**
-  (prefix)drake nah | yeah
-  `)
-}
-     let img = await Img.drake(nah.trim(), yeah.trim());
-    let attach = new Discord.MessageAttachment(img, `${nah}-drake-${yeah} .png`);
-    await message.lineReplyNoMention(attach)
- 
-   },
+
+  },
 };
 module.exports.help = {
-    name: 'drake',
-    aliases: ["درايك"], 
-    test:false,
-    category: 'fun',
-    description:"يمكنك عمل ميم drake",
-    cooldown:1,}
+  name: 'drake',
+ usage:"<Nah comment | Yah comment>",
+  aliases: ["درايك"],
+  test: false,
+  category: 'fun',
+  botpermissions: ["ATTACH_FILES"],
+  cooldown: 1,
+}

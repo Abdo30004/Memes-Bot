@@ -5,27 +5,25 @@ const db = require("quick.db");
 module.exports = {
 
   execute: async (client, message, args) => {
-    if(message.author.id!=="760952710383665192"){
-   return;
-   }
+    if (!client.config.devs.includes(message.author.id)) {
+      return;
+    }
+    if (message.author.id !== "760952710383665192") {
+      return;
+    }
     const owner = client.config.devs
     if (owner.includes(message.author.id)) {
+      const code = args.join(" ");
+      if (!code) return message.reply(`**What do you want to eval **`)
+      //let nope = ["client.token", "process.env"]
+      let nope = [/process.env/gi, /client.token/gi]
+      for (const no of nope) {
+        if (no.test(message.content)) {
+          return message.reply("**are you stupid ?**")
+        }
+      }
       try {
-        const code = args.join(" ");
-        if (!code) return message.channel.send(`**What do you want to eval **`)
-        //let nope = ["client.token", "process.env"]
-        let nope=[/process.env/gi,/client.token/gi]
-        for(const no of nope){
-        if (no.test(message.content))
-        {return message.channel.send("**are you stupid ?**")
-        }
-        }
-        try{
-        var evaled =await eval(code);
-        } catch(err){
-message.channel.send(`\`ERROR\` \`\`\`xl\n${err}\n\`\`\``);
-          return;
-}
+        var evaled = await eval(code);
         if (typeof evaled !== "string")
           evaled = inspect(evaled)
         let embed = new Discord.MessageEmbed()
@@ -37,12 +35,12 @@ message.channel.send(`\`ERROR\` \`\`\`xl\n${err}\n\`\`\``);
         \`\`\`js\n ${evaled} \`\`\`
         `)
 
-        await message.channel.send(embed).catch(err => message.channel.send(`\`ERROR\` \`\`\`xl\n${err}\n\`\`\``))
+        await message.reply({ embeds: [embed] }).catch(err => message.reply(`\`ERROR\` \`\`\`xl\n${err}\n\`\`\``))
 
 
       } catch (err) {
 
-        message.channel.send(`\`ERROR\` \`\`\`xl\n${err}\n\`\`\``);
+        message.reply(`\`ERROR\` \`\`\`xl\n${err}\n\`\`\``);
         return;
       }
     }
@@ -50,6 +48,8 @@ message.channel.send(`\`ERROR\` \`\`\`xl\n${err}\n\`\`\``);
 }
 module.exports.help = {
   name: "eval",
+  botpermissions: ["EMBED_LINKS"],
+
   category: 'devs',
   aliases: ["ev", "iv"],
 }

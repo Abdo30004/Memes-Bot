@@ -1,6 +1,8 @@
+const i18n=require("i18n")
+
 module.exports = {
-    async execute(client, message, args) { 
- 
+    async execute(client, message, args,lang) { 
+ i18n.setLocale(lang)
  
    },
 };
@@ -8,7 +10,7 @@ module.exports.help = {
   name: '',
   aliases: [],
   category: '',
-  description: "",
+  botpermissions:[],
   test :false,
   cooldown: 1,
 }

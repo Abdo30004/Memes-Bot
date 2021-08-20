@@ -4,31 +4,36 @@
   "description": "memes bot project",
   "main": "index.js",
   "engines": {
-    "npm":"6.14.12",
-    "node": "14.0.0"
+    "npm": "6.14.12",
+    "node": "16.6.1"
   },
   "dependencies": {
     "@canvacord/emoji-parser": "^1.0.1",
-    "@top-gg/sdk": "^3.1.1",
+    "@canvacord/gif": "^1.0.2",
+    "@vitalets/google-translate-api": "^7.0.0",
+    "aki-api": "^5.1.1",
     "ascii-table": "0.0.9",
+    "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "canvacord": "^5.2.1",
     "canvas": "^2.8.0",
     "center-align": "^1.0.1",
     "chalk": "^4.1.1",
     "disc": "^1.3.3",
-    "discord-buttons": "^3.0.1",
     "discord-image-generation": "^1.4.9",
-    "discord-reply": "^0.1.2",
-    "discord.js": "^12.5.3",
+    "discord.js": "^13.0.1",
+    "download": "^8.0.0",
     "express": "^4.17.1",
     "figlet": "^1.5.0",
+    "gifencoder": "^2.0.1",
     "got": "^11.8.2",
     "i": "^0.3.6",
+    "i18n": "^0.13.3",
     "image-generation-for-discord": "^2.0.4",
     "jimp": "^0.16.1",
     "moment": "^2.29.1",
     "mongoose": "^5.12.11",
+    "node": "^16.6.1",
     "node-canvas-with-twemoji-and-discord-emoji": "^1.2.1",
     "node-fetch": "^2.6.1",
     "node-superfetch": "^0.2.3",
@@ -36,13 +41,12 @@
     "pretty-ms": "^7.0.1",
     "quick.db": "^7.1.3",
     "random": "^3.0.6",
-    "top.gg-core": "^1.0.0-b",
-    "topgg-autoposter": "^2.0.0"
+    "stream-to-buffer": "^0.1.0",
+    "top.gg-core": "^1.0.0-b"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "npm install && node index.js"
   },
   "author": "tt4k,abdo,baraa",
   "license": "ISC"

@@ -3,12 +3,10 @@ var center = require('center-align');
 const Discord = require('discord.js');
 const db = require("quick.db")
 const random = require('random');
-const chalk = require("chalk")
-const client = new Discord.Client();
+const chalk = require("chalk");
 module.exports = async (client) => {
-  let logs = client.channels.cache.get(client.config.log);
   //console.clear()
-  figlet('Memes Bot', { font: "Banner" }, async function(err, data) {
+  figlet('Memes Bot', { font: "Banner" }, async function (err, data) {
     if (err) {
       console.log('Something went wrong...');
       console.dir(err);
@@ -23,23 +21,13 @@ module.exports = async (client) => {
   console.table(info);
 
   setInterval(() => {
-    let data = db.get("devonly")
-    var status;
-    if (!data) {
-
-
-      status = "-help"
-    }
-    else if (data) {
-      status = "🔨 البوت تحت الصيانة"
-    }
+        var status="-help";
     client.user.setActivity(status, { type: "PLAYING" });
-    //client.user.setStatus("idle")
   }, 5000)
-  let embed=new Discord.MessageEmbed()
-  .setTitle("**I AM READY**")
-  .setColor("BLUE")
-  .setTimestamp()
-  
-  logs.send(embed)
+  let embed = new Discord.MessageEmbed()
+    .setTitle("**I AM READY**")
+    .setColor("BLUE")
+    .setTimestamp()
+
+  client.logs.send({ embeds: [embed] })
 }

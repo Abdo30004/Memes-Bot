@@ -1,11 +1,18 @@
 const fetch = require("node-fetch");
 const Discord = require("discord.js");
+const i18n = require("i18n");
 module.exports = {
-  async execute(client, message, args) {
+  async execute(client, message, args, lang) {
+    i18n.setLocale(lang)
     let channel = message.member.voice.channel
-    if (!channel) return message.reply("**لا يمكنك استعمال الأمر خارج قناة صوتية**")
+    if (!channel) {
+      message.reply(i18n.__("commands.games.voice"))
+      return;
+    }
+
+
     let embed = new Discord.MessageEmbed();
-    fetch(`https://discord.com/api/v8/channels/${channel.id}/invites`, {
+    let fetched = await fetch(`https://discord.com/api/v8/channels/${channel.id}/invites`, {
       method: "POST",
       body: JSON.stringify({
         max_age: 0,
@@ -20,20 +27,23 @@ module.exports = {
         "Content-Type": "application/json"
       }
     })
-      .then(res => res.json())
-      .then(invite => {
-        embed.setDescription(`[**إضغط هنا للعب الشطرنج**](https://discord.gg/${invite.code})`)
-        embed.setColor("#ffffff")
-        message.channel.send(embed)
-      })
+    let invite = await fetched.json();
+
+    embed.setDescription(`[**${i18n.__("commands.games.success", { game: "#0e0000" })
+      }**](https://discord.gg/${invite.code})`)
+    embed.setColor("#f0d50c")
+      await message.reply({ embeds: [embed] })
+
 
   },
 };
 module.exports.help = {
   name: 'chess',
   aliases: [],
+  usage: "(only in voice channel)",
+  botpermissions: ["EMBED_LINKS"],
   category: 'games',
-  description: "يمكنك لعب لعبة الشطرنج في ديسكورد !!",
   test: false,
   cooldown: 1,
 }
+//832012586023256104

@@ -1,106 +1,183 @@
 
 const Discord = require("discord.js");
-const schema = require('../../models/prefix');
+//var list = +help
+
+
+
+String.prototype.title = function () {
+  return this.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+};
+const i18n = require("i18n")
+
 
 module.exports = {
-  async execute(client, message, args) {
-    String.prototype.title = function() {
-      return this.replace(/\w\S*/g, function(txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
-    };
+  async execute(client, message, args, lang) {
+    i18n.setLocale(lang)
     var dev = client.config.devs.includes(message.author.id)
-    var prefixdata = await schema.findOne({ id: message.guild.id });
-    var prefix;
-    if (prefixdata === null) {
-      prefix = client.config.prefix;
-    } else {
-      prefix = prefixdata.Prefix
-    }
-    var list = [...new Set(client.commands.filter(cmd => cmd.help.category && cmd.help.category != "devs").map(cmd => cmd.help.category))]
-    if(!args[0]){
-    let mainE = new Discord.MessageEmbed()
-      .setTitle(`**Commands Help**`)
-      .setDescription(`
-**Public Commands** : :busts_in_silhouette: \n
-**Memes Commands** : :joy: \n
-**Fun Commands** : :sparkles: \n
-**Games Commands** :video_game: \n
-**Filters Commands** :mage: \n
+    var prefix = client.guildsConfig.get(message.guild.id).prefix
+    let options = [
+      {
+        "label": i18n.__("commands.help.public.label"),
+        "value": "public",
+        "emoji": "870284655608340480",
+        "description": i18n.__("commands.help.public.description"),
+      },
+      {
+        "label": i18n.__("commands.help.memes.label"),
+        "value": "memes",
+        "emoji": "😂",
+        "description": i18n.__("commands.help.memes.description"),
 
-`)
-    let msg = await message.channel.send(mainE)
-    try {
-      await msg.react("👥")
-      await msg.react("😂")
-      await msg.react("✨")
-      await msg.react("🎮")
-      await msg.react("🧙")
-    } catch (err) {
-      return
-    }
-    if (dev) {
-      await msg.react("852213932001460294")    
-    }
-    let filter = (reaction, user) => user.id == message.author.id
-    const collector = msg.createReactionCollector(filter, { time: 60 * 60 * 1000 })
-    collector.on("collect", (reaction, user) => {
-      var category;
-      switch (reaction.emoji.name) {
-        case "👥":
-          category = "public"
-          break;
-        case "😂":
-          category = "memes"
-          break;
-        case "✨":
-          category = "fun"
-          break;
-        case "🎮":
-          category = "games"
-          break;
-        case "🧙":
-          category = "filters"
-          break;
-        case "circle":
-          category = "devs"
-          break;
-         default :
-          category = "public"
-          break;
+      },
+      {
+        "label": i18n.__("commands.help.fun.label"),
+        "value": "fun",
+        "emoji": "✨",
+        "description": i18n.__("commands.help.fun.description"),
+
+      },
+      {
+        "label": i18n.__("commands.help.games.label"),
+        "value": "games",
+        "emoji": "🎮",
+        "description": i18n.__("commands.help.games.description"),
+
+      },
+      {
+        "label": i18n.__("commands.help.filters.label"),
+        "value": "filters",
+        "emoji": "853250920879882301",
+        "description": i18n.__("commands.help.filters.description"),
+
+      },
+      {
+        "label": i18n.__("commands.help.settings.label"),
+        "value": "settings",
+        "emoji": "⚙️",
+        "description": i18n.__("commands.help.settings.description"),
       }
-      var embed = new Discord.MessageEmbed()
-        .setTitle(`**<:circle:852213932001460294> ${category} Commands Help <:circle:852213932001460294>**`.title())
-        .setDescription(`>>> ${client.commands.filter(cmd =>cmd.help.category == category).map(cmd =>
-          `\`${prefix}${cmd.help.name}\` **${cmd.help.description}**\n\n`
-        ).join(" ")}`)
-        .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true, format: "png" }))
-      reaction.users.remove(user.id).catch(err=>null)
-      msg.edit(embed)
-    })
-    } else {
-      const command = client.commands.get(args.join(" ").toLowerCase()) || client.commands.find(a => a.aliases && a.aliases.includes(args.join(" ").toLowerCase()))
+    ]
+    if (dev) {
+      options.push({
+        "label": "Developer Commands", "value": "devs", "emoji": "🛠️"
+      })
+    }
+    let row = new Discord.MessageActionRow().addComponents(
+      new Discord.MessageSelectMenu()
+        .setPlaceholder("Choose Category")
+        .addOptions(options)
+        .setCustomId("category"))
+    let row2 = new Discord.MessageActionRow().addComponents(new Discord.MessageButton()
+      .setCustomId("Delete")
+      .setLabel("Delete")
+      .setStyle("DANGER"))
 
-      if (!command) return message.channel.send(`❗ - I did not found this command !`);
+
+    if (!args[0]) {
+      let mainE = new Discord.MessageEmbed()
+        .setTitle(`**Commands Help**`)
+        .setDescription(` \`${prefix}help [command/category]\`
+
+__Categories :__
+
+**\`${i18n.__("commands.help.public.label")}\`** : <:public:870284655608340480>
+**\`${i18n.__("commands.help.memes.label")}\`** : :joy: 
+**\`${i18n.__("commands.help.fun.label")}\`** : :sparkles: 
+**\`${i18n.__("commands.help.games.label")}\`** : :video_game: 
+**\`${i18n.__("commands.help.filters.label")}\`** : <:filters:853250920879882301>
+**\`${i18n.__("commands.help.settings.label")}\`** : ⚙️
+
+`).setFooter(`${prefix}help`, client.user.displayAvatarURL({ format: "png" })).setTimestamp().setColor("#f0d50c")
+
+
+
+      var msg = await message.reply({ embeds: [mainE], components: [row, row2] })
+      let filter = (interaction) => interaction
+      const collector = msg.createMessageComponentCollector({ filter, idle: 3 * 60 * 1000 })
+      collector.on("collect", async (interaction) => {
+        if (interaction.user.id !== message.author.id) {
+          await interaction.deferReply({ ephemeral: true });
+        } else {
+          await interaction.deferUpdate()
+        }
+        if (interaction.isButton()) {
+          if (interaction.user.id !== message.author.id) {
+            interaction.editReply(`You can not do this`);
+          } else {
+            msg.delete();
+          }
+          return;
+        }
+        var category = interaction.values[0];
+        let description = ">>> "
+        client.commands.filter(cmd => cmd.help.category == category).forEach(cmd => {
+          if (cmd.help.category !== "devs") {
+            description += ` \` ${prefix}${cmd.help.name}\` **${i18n.__(`commands.${cmd.help.name}.description`) !== "No Value" ? i18n.__(`commands.${cmd.help.name}.description`) : "No description"}**\n\n `
+          } else {
+            description += ` \` ${prefix}${cmd.help.name}\`**\n\n `
+          }
+        })
+        var embed = new Discord.MessageEmbed()
+          .setTitle(`**<:circle:852213932001460294> ${category} Commands Help <:circle:852213932001460294>**`.title())
+          .setColor("#f0d50c")
+          .setDescription(description)
+          .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true, format: "png" }))
+        if (interaction.user.id !== message.author.id) {
+          interaction.editReply({ embeds: [embed] })
+        } else {
+          msg.edit({ embeds: [embed] })
+        }
+      })
+      collector.on("end", async (collected) => {
+        await msg.edit({ components: [] })
+      })
+    } else {
+      const command = client.commands.get(args.join(" ").toLowerCase()) || client.commands.find(cmd => cmd.help.aliases && cmd.help.aliases.includes(args.join(" ").toLowerCase()))
+      const category = [...new Set(client.commands.filter(cmd => cmd.help.category && cmd.help.category != "devs").map(cmd => cmd.help.category))].includes(args.join(" ").toLowerCase()) ? args.join(" ").toLowerCase() : null
+
+
+      if (category) {
+        let description = ""
+        client.commands.filter(cmd => cmd.help.category == category).forEach(cmd => {
+          description += `\` ${prefix}${cmd.help.name}\`,`
+        })
+
+        let embed = new Discord.MessageEmbed()
+          .setTitle(`${category.title()} Commands`)
+          .setDescription(description)
+        message.reply({ embeds: [embed] })
+        return;
+      }
+      if (!command || command.help.category === "devs") return message.reply(i18n.__("commands.help.notfound"));
 
       if (command && command.help.category != "devs") {
         let name = command.help.name
         var aliases;
         try {
-          aliases = command.help.aliases.map(a => `${prefix}${a}`).join(",")
+          aliases = command.help.aliases.map(a => `\`${prefix}${a}\``).join("/")
         } catch (err) {
           aliases = "لا توجد الإختصارات"
         }
-        var image = await `https://api.abderrahmane300.repl.co/memes-bot/${command.help.name}.gif`
-        var description = command.help.description
+        var description = i18n.__(`commands.${command.help.name}.description`) !== "No Value" ? i18n.__(`commands.${command.help.name}.description`) : "No description"
+        var usage = `${prefix}${command.help.name}${command.help.usage ? " " + command.help.usage : ""}`
         if (!name) return
-        if (!aliases) { aliases = "لا توجد الإختصارات" }
-        if (!description) { description = "لا يوجد وصف" }
+        if (!aliases) {
+          aliases = "لا توجد الإختصارات"
+        }
         let embed = new Discord.MessageEmbed()
           .setTitle(`**Help for command ${name}**`)
-          .addField("**Aliases | الإختصارات**", aliases)
-          .addField("**Description | الوصف**", `**${description}**`)
-          .setImage(image ? image : null)
-          .setColor('#ffd400')
-        message.channel.send(embed)
+          .addField("**Usage :**", `**\`${usage}\`**`)
+          .addField("**Aliases :**", `${aliases}`)
+          .addField("**Description :**", `**\`${description}\`**`)
+          .setColor("#f0d50c").setFooter(`${prefix}help`, client.user.displayAvatarURL({ format: "png" }))
+        if (command.help.permissions) {
+          embed.addField("**Required Permission :**", `\`${command.help.permissions}\``)
+        }
+        if (command.help.botpermissions) {
+          embed.addField("**Bot Required Permission :**", `\`${command.help.botpermissions}\``)
+        }
+        message.reply({ embeds: [embed] })
+
 
       }
     }
@@ -109,9 +186,15 @@ module.exports = {
 
 module.exports.help = {
   name: 'help',
-  aliases: ["اوامر","الاوامر"],
+  usage: "[command/categoty]",
+  aliases: ["اوامر", "الاوامر"],
+  botpermissions: ["EMBED_LINKS"],
+
   category: 'public',
-  description: "لعرض اوامر البوت",
   test: false,
   cooldown: 1,
 }
+
+    /*.setDescription(`>>> ${client.commands.filter(cmd =>cmd.help.category == category).map(cmd =>
+            `\`${prefix}${cmd.help.name}\` **${cmd.help.description}**\n\n`
+          ).join(" ")}`)*/

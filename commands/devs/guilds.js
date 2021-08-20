@@ -1,80 +1,95 @@
-const Discord = require('discord.js')
+const Discord = require("discord.js");
+const moment = require("moment")
 module.exports = {
-
   async execute(client, message, args) {
-    let devs = client.config.devs
-    if (devs.includes(message.author.id)) {
-      try {
-        var x = 0;
-        var y = 1;
-        var icon = await client.guilds.cache.sort((a, b) => b.memberCount - a.memberCount).map(guild => guild.iconURL({ dynamic: true, format: "png" })).slice(x, y).join('')
-        var array = client.guilds.cache.sort((a, b) => b.memberCount - a.memberCount).map((guild) =>
-          `**Guild Name :** ${guild.name}\n
-          **Guild Id :** ${guild.id}\n
-          **Guild Members :** ${guild.memberCount}\n
-          **Guild Owner Id :** ${guild.ownerID}\n
-					`)
-        var guildssize = array.slice(x, y)
-        const embed = new Discord.MessageEmbed()
-          .setColor('GREEN')
-          .setDescription(guildssize)
-          .setThumbnail(icon)
-          .setFooter(`Total guilds : ${client.guilds.cache.size}`)
-        message.channel.send(embed).then(async msg => {
-          await msg.react("◀")
-          await msg.react("▶")
-          const backwardsFilter = (reaction, user) => reaction.emoji.name === '◀' && user.id === message.author.id;
-          const forwardsFilter = (reaction, user) => reaction.emoji.name === '▶' && user.id === message.author.id;
-          const backwards = msg.createReactionCollector(backwardsFilter, { time: 2000000 });
-          const forwards = msg.createReactionCollector(forwardsFilter, { time: 2000000 });
-          forwards.on('collect', async (reaction, user) => {
-            x = x + 1
-            y = y + 1
-            c = y
-            if (y > array.length) y = array.length + 1
-            if (y > array.length) x = y - 1
-
-            icon = await client.guilds.cache.sort((a, b) => b.memberCount - a.memberCount).map(guild => guild.iconURL({ dynamic: true, format: "png" })).slice(x, y).join('')
-            guildssize = client.guilds.cache.sort((a, b) => b.memberCount - a.memberCount).map((guild) =>
-              `**Guild Name :** ${guild.name}\n
-          **Guild Id :** ${guild.id}\n
-          **Guild Members :** ${guild.memberCount}\n
-          **Guild Owner Id :** ${guild.ownerID}\n
-					`).slice(x, y)
-            embed.setDescription(guildssize)
-            embed.setThumbnail(icon)
-            msg.edit(embed)
-
-            reaction.users.remove(user.id)
-          })
-          backwards.on('collect', async (reaction, user) => {
-            x = x - 1
-            y = y - 1
-            if (x < 0) x = 0
-            if (y < 1) y = 1
-            icon = await client.guilds.cache.sort((a, b) => b.memberCount - a.memberCount).map(guild => guild.iconURL({ dynamic: true, format: "png" })).slice(x, y).join('')
-            guildssize = client.guilds.cache.sort((a, b) => b.memberCount - a.memberCount).map((guild) =>
-              `**Guild Name :** ${guild.name}\n
-          **Guild Id :** ${guild.id}\n
-          **Guild Members :** ${guild.memberCount}\n
-          **Guild Owner Id :** ${guild.ownerID}\n
-					`).slice(x, y)
-            embed.setThumbnail(icon)
-            embed.setDescription(guildssize)
-            msg.edit(embed)
-            reaction.users.remove(user.id)
-          }
-          )
-
-        })
-      } catch (err) {
-        return message.channel.send(`:x: - ${err.message} Try Again Later!`)
-      }
+    if (!client.config.devs.includes(message.author.id)) {
+      return;
     }
+    async function embed(guild, number) {
+      let icon = guild.iconURL({ dynamic: true, format: "png" });
+      let owner = await client.users.fetch(guild.ownerId)
+      let config = client.guildsConfig.get(message.guild.id)
+      let embed = new Discord.MessageEmbed()
+        .setTitle(guild.name)
+        .setURL(icon)
+        .addFields([
+          {
+            "name": "Id :",
+            "value": `${guild.id}`
+          }, {
+            "name": "Prefix :",
+            "value": `${config.prefix}`
+          }, {
+            "name": "Language :",
+            "value": `${config.language}`
+          }, {
+            "name": "Members :",
+            "value": `${guild.memberCount}`
+          }, {
+            "name": "Created",
+            "value": `${moment(guild.createdAt).fromNow()}`
+          },
+          {
+            "name": "Owner id",
+            "value": `${owner.id}`
+          },
+          {
+            "name": "Owner tag",
+            "value": `${owner.tag}`
+          }
+        ])
+        .setThumbnail(icon)
+        .setTimestamp(guild.createdAt)
+        .setFooter(`Guild ${number + 1} of ${client.guilds.cache.size}`)
+      return embed
+    }
+
+    let guilds = [...client.guilds.cache.values()]
+    let number = isNaN(args[0]) ? 0 : Number(args[0]) > guilds.length - 1 || Number(args[0]) < 0 ? guilds.length - 1 : Number(args[0])
+    let row = new Discord.MessageActionRow().addComponents([
+      new Discord.MessageButton()
+        .setLabel("previous")
+        .setEmoji("◀")
+        .setCustomId("previous")
+        .setStyle("SUCCESS"),
+
+      new Discord.MessageButton()
+        .setLabel("next")
+        .setEmoji("▶")
+        .setCustomId("next")
+        .setStyle("SUCCESS")
+    ])
+
+    let msg = await message.reply({ embeds: [await embed(guilds[number], number)], components: [row] });
+    let filter = (interaction) => interaction.user.id === message.author.id;
+    let collector = msg.createMessageComponentCollector(filter, { time: 120 * 1000 });
+
+    collector.on("collect", async (interaction) => {
+      await interaction.deferUpdate()
+      switch (interaction.customId) {
+        case "previous":
+          number -= 1
+          if (number < 0) {
+            number = guilds.length - 1
+          }
+          break;
+        case "next":
+          number += 1
+          if (number > guilds.length - 1) {
+            number = 0
+          }
+          break;
+      }
+      msg.edit({ embeds: [await embed(guilds[number], number)] })
+    })
+
   },
 };
 module.exports.help = {
   name: 'guilds',
-  aliases: [], // you can add more
+  aliases: [],
   category: 'devs',
+  description: "",
+  test: false,
+  cooldown: 1,
 }

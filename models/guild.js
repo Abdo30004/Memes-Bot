@@ -7,19 +7,23 @@ const Shema= new mongoose.Schema({
   
 	prefix: {
   type:String,
-  required:true,
     default:"-"
   },
   
   channel:{
   type:String,
-  required:true,
     default:null
   },
-  
+  autopost:{
+  type:Boolean,
+  default:false
+  },
+   time:{
+  type:Number,
+  default:20*60*1000
+  },
   language :{
   type:String,
-  required:true,
     default:"en"
   }
   

@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
-const reqstring={
-  type:String,
-  required:true
+const reqstring = {
+  type: String,
+  required: true
 }
 const listShema = new mongoose.Schema({
-	Id: reqstring,
-  Reason: reqstring,
-	By: reqstring,
+  _id: reqstring,
+  reason: reqstring,
+  by: reqstring,
+  at: { type: Date, default: Date.now }
 })
-const ListModel=mongoose.model('Black-List',listShema)
+const ListModel = mongoose.model('Black-List', listShema)
 module.exports = ListModel;

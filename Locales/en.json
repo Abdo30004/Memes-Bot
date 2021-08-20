@@ -1,0 +1,183 @@
+{
+	"messageCreate": {
+		"permissions": "**You need Permission `{&permission}` to use `{&name}`**",
+		"botpermissions": "**I need permission `{&permission}` in this channel `{&channel}` to run the command `{&command}`**",
+		"blacklist_embed": "**You are blacklisted, you can contact [__Support server__](https://discord.gg/5J53eVXYXA)**",
+		"blacklist": "**You are blacklisted, you can contact __Support server__**"
+	},
+	"ready": {
+		"permission": "**I can't send memes in this channel, I need `{&permission}` permission**",
+		"error": "** :x: Internal error,try reusing the command**"
+	},
+	"commands": {
+		"meme": {
+			"button": "Download",
+			"title": "Random Meme",
+			"rights": "All rights reserved to {&user}",
+			"description": "Send A Random Meme"
+		},
+		"setlanguage": {
+			"placeholder": "Choose language",
+			"message": "Choose Bot language in this server \n __Note:__ changing bot language will also affect memes language",
+			"success": "English language has been set successfully 🇺🇸",
+			"description": "Change the bot and memes language in this server"
+		},
+		"setprefix": {
+			"error": "**Please choose the new prefix**",
+			"success": "** My prefix in this server now is `{&prefix}` **",
+			"description": "Change the bot prefix in this server"
+		},
+		"games": {
+			"voice": "**You can not use this command outside a voice channel !!**",
+			"success": "Click here to play {&game}"
+		},
+		"fun": {
+			"mention": "**Please mention someone**",
+			"comment": "**Please write a comment**",
+			"drake": "**Please use \n {&prefix}drake No comment | Yes comment**",
+			"panic": "**Please use\n {&prefix}panic panic | calm | panic **"
+		},
+		"chess": {
+			"description": "Play chess game on discord"
+		},
+		"poker": {
+			"description": "Play chess poker on discord"
+		},
+		"youtube": {
+			"description": "Watch youtube with your friends"
+		},
+		"bot": {
+			"description": "Bot Info"
+		},
+		"copyrights": {
+			"description": "Bot And Site copyrigths (Arabic memes)"
+		},
+		"help": {
+			"description": "Bot commands",
+			"public": {
+				"label": "Public commands",
+				"description": "Basic bot commands"
+			},
+			"memes": {
+				"label": "Memes Commands",
+				"description": "Funny memes (vidos and pictures)"
+			},
+			"fun": {
+				"label": "Fun commands",
+				"description": "Meme maker!!!"
+			},
+			"games": {
+				"label": "Games Commands",
+				"description": "play games and watch youtube in Discord"
+			},
+			"filters": {
+				"label": "Filters Commands",
+				"description": "Photo editing"
+			},
+			"settings": {
+				"label": "Settings",
+				"description": "Manage bot settings in this server"
+			},
+			"notfound": "**I didn't found this command :x: **"
+		},
+		"invite": {
+			"description": "Invite our bot"
+		},
+		"ping": {
+			"description": "Bot ping"
+		},
+		"website": {
+			"description": "Official website"
+		},
+		"vmeme": {
+			"description": "Send A Random video"
+		},
+		"fuse": {
+			"description": "Fuse Your Avatar with A friend"
+		},
+		"batslap": {
+			"description": "Slap your friend!!"
+		},
+		"clyde": {
+			"description": "Say something with clyde bot"
+		},
+		"comment": {
+			"description": "Comment on youtube!!!"
+		},
+		"drake": {
+			"description": "Make drake meme"
+		},
+		"movie": {
+			"description": "Search for your favorite movie"
+		},
+		"ohno": {
+			"description": "Make A ohno meme"
+		},
+		"opinion": {
+			"description": "Make A opinion meme"
+		},
+		"panic": {
+			"description": "Make A panic meme"
+		},
+		"wanted": {
+			"description": "Are you wanted!!!"
+		},
+		"wasted": {
+			"description": "Wasted ?!!"
+		},
+		"blur": {
+			"description": "Blur your Avatar"
+		},
+		"greyscale": {
+			"description": "Greyscale your Avatar"
+		},
+		"motionblur": {
+			"description": "Make motion effect"
+		},
+		"eject": {
+			"description": "Sus"
+		},
+		"quote": {
+			"description": "Make a fake discord message"
+		},
+		"vote": {
+			"description": "Did you vote for the bot?",
+			"voted": "**Thanks for voting on {&link} :rose: **",
+			"not_voted": "**Didn't vote on {&link} :frowning:**"
+		},
+		"setchannel": {
+			"success": "**Channel <#{channel}> has been set successfully",
+			"message": "**I will post memes in this channel every 20m **",
+			"permission": "**I don't have the permission __`{&permission}`__ in the channel __<#{&channel}>__, give me that permission and reuse this command**",
+			"same": "**This channel is the same channel that i post on it**",
+			"description": "Set the auto memes posting channel",
+			"error": "**Please mention a channel**"
+		},
+		"setmemes": {
+			"description": "Turn on/off auto memes posting",
+			"on": "**Automatic memes posting turned on successfully**",
+			"off": "**Automatic memes posting turned off successfully**",
+			"args": "**Please choose on/off**"
+		},
+		"trash": {
+			"description": "make trash meme"
+		},
+		"invert": {
+			"description": "invert avatar/picture colors"
+		},
+		"aki": {
+			"buttons": {
+				"yes": "Yes",
+				"no": "No",
+				"idk": "Don't know",
+				"probably": "Probably",
+				"probably_not": "Probably not",
+				"back": "Back",
+				"stop": "Stop"
+			},
+			"time": "**Time Ended**",
+			"progress": "Progress",
+			"stoped": "**Game has been stoped successfully**"
+		}
+	}
+}

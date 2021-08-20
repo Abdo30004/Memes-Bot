@@ -1,0 +1,190 @@
+{
+	"commands": {
+		"setprefix": {
+			"prefix": "commands.setprefix.prefix",
+			"description": "commands.setprefix.description"
+		},
+		"meme": {
+			"button": "commands.meme.button",
+			"title": "commands.meme.title",
+			"rights": "commands.meme.rights",
+			"description": "commands.meme.description"
+		},
+		"prefix": {
+			"success": "commands.prefix.success"
+		},
+		"chess": {
+			"description": "commands.chess.description"
+		},
+		"poker": {
+			"description": "commands.poker.description"
+		},
+		"youtube": {
+			"description": "commands.youtube.description"
+		},
+		"bot": {
+			"description": "commands.bot.description"
+		},
+		"copyrights": {
+			"description": "commands.copyrights.description"
+		},
+		"help": {
+			"description": "commands.help.description",
+			"memes": {
+				"label": "No Value",
+				"description": "No Value"
+			},
+			"public": {
+				"label": "No Value",
+				"description": "No Value"
+			},
+			"fun": {
+				"label": "No Value",
+				"description": "No Value"
+			},
+			"games": {
+				"label": "No Value",
+				"description": "No Value"
+			},
+			"filters": {
+				"label": "No Value",
+				"description": "No Value"
+			},
+			"settings": {
+				"label": "No Value",
+				"description": "No Value"
+			},
+			"notfound": "No Value"
+		},
+		"invite": {
+			"description": "commands.invite.description"
+		},
+		"ping": {
+			"description": "commands.ping.description"
+		},
+		"website": {
+			"description": "commands.website.description"
+		},
+		"vmeme": {
+			"description": "commands.vmeme.description"
+		},
+		"fuse": {
+			"description": "commands.fuse.description"
+		},
+		"batslap": {
+			"description": "commands.batslap.description"
+		},
+		"clyde": {
+			"description": "commands.clyde.description"
+		},
+		"comment": {
+			"description": "commands.comment.description"
+		},
+		"drake": {
+			"description": "commands.drake.description"
+		},
+		"movie": {
+			"description": "commands.movie.description"
+		},
+		"ohno": {
+			"description": "commands.ohno.description"
+		},
+		"opinion": {
+			"description": "commands.opinion.description"
+		},
+		"panic": {
+			"description": "commands.panic.description"
+		},
+		"wanted": {
+			"description": "commands.wanted.description"
+		},
+		"wasted": {
+			"description": "commands.wasted.description"
+		},
+		"blur": {
+			"description": "commands.blur.description"
+		},
+		"greyscale": {
+			"description": "commands.greyscale.description"
+		},
+		"motionblur": {
+			"description": "commands.motionblur.description"
+		},
+		"palestine": {
+			"description": "commands.palestine.description"
+		},
+		"blacklist": {
+			"description": "commands.blacklist.description"
+		},
+		"devonly": {
+			"description": "commands.devonly.description"
+		},
+		"eval": {
+			"description": "commands.eval.description"
+		},
+		"guilds": {
+			"description": "commands.guilds.description"
+		},
+		"leave": {
+			"description": "commands.leave.description"
+		},
+		"blacklists": {
+			"description": "commands.blacklists.description"
+		},
+		"pages": {
+			"description": "commands.pages.description"
+		},
+		"unblacklist": {
+			"description": "commands.unblacklist.description"
+		},
+		"eject": {
+			"description": "No Value"
+		},
+		"quote": {
+			"description": "No Value"
+		},
+		"setlanguage": {
+			"description": "No Value"
+		},
+		"vote": {
+			"description": "No Value"
+		},
+		"invert": {
+			"description": "No Value"
+		},
+		"trash": {
+			"description": "No Value"
+		},
+		"setchannel": {
+			"success": "No Value",
+			"message": "No Value",
+			"permission": "No Value",
+			"error": "No Value",
+			"description": "No Value"
+		},
+		"setautomemes": {
+			"on": "No Value",
+			"off": "No Value",
+			"args": "No Value"
+		},
+		"setmemes": {
+			"description": "No Value"
+		},
+		"aki": {
+			"buttons": {
+				"yes": "No Value",
+				"no": "No Value",
+				"idk": "No Value",
+				"probably": "No Value",
+				"probably_not": "No Value",
+				"back": "No Value",
+				"stop": "No Value"
+			},
+			"time": "No Value",
+			"stop": "No Value"
+		}
+	},
+	"ready": {
+		"permission": "No Value"
+	}
+}

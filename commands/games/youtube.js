@@ -1,11 +1,16 @@
-const fetch=require("node-fetch");
-const Discord=require("discord.js");
+const fetch = require("node-fetch");
+const Discord = require("discord.js");
+const i18n = require("i18n");
 module.exports = {
-  async execute(client, message, args) {
+  async execute(client, message, args, lang) {
+    i18n.setLocale(lang)
     let channel = message.member.voice.channel
-    if (!channel) return message.reply("**لا يمكنك استعمال الأمر خارج قناة صوتية**")
+    if (!channel) {
+      message.reply(i18n.__("commands.games.voice"))
+      return;
+    }
     let embed = new Discord.MessageEmbed();
-    fetch(`https://discord.com/api/v8/channels/${channel.id}/invites`, {
+    let fetched = await fetch(`https://discord.com/api/v8/channels/${channel.id}/invites`, {
       method: "POST",
       body: JSON.stringify({
         max_age: 0,
@@ -20,20 +25,23 @@ module.exports = {
         "Content-Type": "application/json"
       }
     })
-      .then(res => res.json())
-      .then(invite => {
-        embed.setDescription(`[**إضغط هنا لمشاهدة youtube**](https://discord.gg/${invite.code})`)
-        embed.setColor("RED")
-        message.channel.send(embed)
-      })
+    let invite = await fetched.json();
+
+    embed.setDescription(`[**${i18n.__("commands.games.success", { game: "youtube" })
+      }**](https://discord.gg/${invite.code})`)
+    embed.setColor("#f0d50c")
+    message.reply({ embeds: [embed] })
+
 
   },
 };
 module.exports.help = {
   name: 'youtube',
+  usage: "(only in voice channel)",
   aliases: ["yt"],
   category: 'games',
-  description: "مشاهدة يوتوب مع أصدقائك",
+  botpermissions: ["EMBED_LINKS"],
   test: false,
   cooldown: 1,
 }
+//755600276941176913
