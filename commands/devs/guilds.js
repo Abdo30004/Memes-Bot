@@ -44,7 +44,7 @@ module.exports = {
       return embed
     }
 
-    let guilds = [...client.guilds.cache.values()]
+    let guilds = [...client.guilds.cache.values()].sort((a,b)=>b.memberCount-a.memberCount)
     let number = isNaN(args[0]) ? 0 : Number(args[0]) > guilds.length - 1 || Number(args[0]) < 0 ? guilds.length - 1 : Number(args[0])
     let row = new Discord.MessageActionRow().addComponents([
       new Discord.MessageButton()
