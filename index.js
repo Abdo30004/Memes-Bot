@@ -27,9 +27,6 @@ const client = new Discord.Client({
     'GUILD_VOICE_STATES',
     'GUILD_MESSAGES',
     'GUILD_MESSAGE_REACTIONS',
-    'DIRECT_MESSAGES',
-    'DIRECT_MESSAGE_REACTIONS',
-    "GUILD_MEMBERS"
   ],
   restTimeOffest: 0,
   allowedMentions: {
