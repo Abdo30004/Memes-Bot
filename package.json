@@ -46,7 +46,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "npm install && node index.js"
+    "start": "node index.js"
   },
   "author": "tt4k,abdo,baraa",
   "license": "ISC"
