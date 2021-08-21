@@ -6,7 +6,6 @@ module.exports = {
       let memes = data.map(body => body.link)
     let devs = client.config.devs
     if (devs.includes(message.author.id)) {
-      let memes = await data.memes
       let number = isNaN(args[0]) ? 0 : Number(args[0]) > memes.length - 1 || Number(args[0]) < 0 ? memes.length - 1 : Number(args[0])
       let row = new Discord.MessageActionRow().addComponents([
         new Discord.MessageButton()
