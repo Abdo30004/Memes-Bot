@@ -182,10 +182,14 @@
 			},
 			"time": "No Value",
 			"stop": "No Value",
-			"already": "No Value"
+			"already": "No Value",
+			"description": "No Value"
 		}
 	},
 	"ready": {
 		"permission": "No Value"
+	},
+	"messageCreate": {
+		"error": "No Value"
 	}
 }

@@ -70,8 +70,10 @@ module.exports = {
     let row2 = new Discord.MessageActionRow().addComponents(new Discord.MessageButton()
       .setCustomId("Delete")
       .setLabel("Delete")
-      .setStyle("DANGER"))
+      .setStyle("DANGER")
       .setEmoji("🗑️")
+      )
+      
 
 
     if (!args[0]) {
