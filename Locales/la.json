@@ -181,7 +181,8 @@
 				"stop": "No Value"
 			},
 			"time": "No Value",
-			"stop": "No Value"
+			"stop": "No Value",
+			"already": "No Value"
 		}
 	},
 	"ready": {

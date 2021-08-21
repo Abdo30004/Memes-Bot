@@ -71,6 +71,7 @@ module.exports = {
       .setCustomId("Delete")
       .setLabel("Delete")
       .setStyle("DANGER"))
+      .setEmoji("🗑️")
 
 
     if (!args[0]) {
@@ -81,10 +82,10 @@ module.exports = {
 __Categories :__
 
 **\`${i18n.__("commands.help.public.label")}\`** : <:public:870284655608340480>
-**\`${i18n.__("commands.help.memes.label")}\`** : :joy: 
-**\`${i18n.__("commands.help.fun.label")}\`** : :sparkles: 
-**\`${i18n.__("commands.help.games.label")}\`** : :video_game: 
-**\`${i18n.__("commands.help.filters.label")}\`** : <:filters:853250920879882301>
+**\`${i18n.__("commands.help.memes.label")}\`** : 😂 
+**\`${i18n.__("commands.help.fun.label")}\`** : ✨ 
+**\`${i18n.__("commands.help.games.label")}\`** : 🎮 
+**\`${i18n.__("commands.help.filters.label")}\`** :
 **\`${i18n.__("commands.help.settings.label")}\`** : ⚙️
 
 `).setFooter(`${prefix}help`, client.user.displayAvatarURL({ format: "png" })).setTimestamp().setColor("#f0d50c")
@@ -188,7 +189,7 @@ module.exports.help = {
   name: 'help',
   usage: "[command/categoty]",
   aliases: ["اوامر", "الاوامر"],
-  botpermissions: ["EMBED_LINKS"],
+  botpermissions: ["EMBED_LINKS", "USE_EXTERNAL_EMOJIS"],
 
   category: 'public',
   test: false,

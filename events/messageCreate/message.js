@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const cooldowns = new Map();
 const db = require("quick.db");
-const pms = require("pretty-ms");
+const ms = require("ms");
 const chalk = require("chalk")
 const i18n = require("i18n");
 
@@ -14,7 +14,7 @@ module.exports = async (client, message, discord) => {
   let mention = `<@!${client.user.id}>`
   const Config = client.guildsConfig.get(message.guild.id)
 
-  var prefix = message.content.startsWith(mention) ? mention : Config?.prefix || client.config.prefix
+  var prefix = message.content.startsWith(mention) ? mention : Config ?.prefix || client.config.prefix
   if (message.content.indexOf(prefix) !== 0) return;
 
   const dev = client.config.devs.includes(message.author.id)
@@ -24,15 +24,27 @@ module.exports = async (client, message, discord) => {
   if (!command) return;
 
 
-  if (!message.guild.me.permissionsIn(message.channel).has(Discord.Permissions.FLAGS["SEND_MESSAGES"])) {
+  if (!message.guild.me.permissionsIn(message.channel).has(Discord.Permissions.FLAGS["SEND_MESSAGES"]) || !message.guild.me.permissionsIn(message.channel).has(Discord.Permissions.FLAGS["READ_MESSAGE_HISTORY"])) {
     try {
       return await message.react("❌")
-    } catch {
+    } catch(err) {
       return
     }
   }
   i18n.setLocale(Config.language)
+  let ldata = await Blacklistdata.findOne({ _id: message.author.id })
 
+
+  if (ldata) {
+    if (message.guild.me.permissionsIn(message.channel).has(Discord.Permissions.FLAGS["EMBED_LINKS"])) {
+      message.reply({ embeds: [{ description: i18n.__("messageCreate.blacklist_embed") }] })
+      return;
+
+    } else {
+      message.reply(i18n.__("messageCreate.blacklist"))
+      return;
+    }
+  }
 
   let memberPermissions = Array.isArray(command ?.help.permissions) ? command ?.help.permissions.filter(perm => Object.keys(Discord.Permissions.FLAGS).includes(perm)) : []
   let botpermissions = Array.isArray(command ?.help.botpermissions) ? command ?.help.botpermissions.filter(perm => Object.keys(Discord.Permissions.FLAGS).includes(perm)) : [];
@@ -57,67 +69,72 @@ module.exports = async (client, message, discord) => {
 
 
 
-  //const voted = await client.topgg.isVoted(message.author.id)
-  if (command) {
+  const voted = await client.topgg.isVoted(message.author.id)
 
-    /*let ldata = await Blacklistdata.findOne({ Id: message.author.id })
-    if (ldata) {
-      let msg=`**تم وضعك فالقائمة السوداء , يمكنك التواصل مع سيرفر [__الدعم الفني__](https://discord.gg/5J53eVXYXA)**`
- 
-      let blackembde = new Discord.MessageEmbed()
-        .setDescription(msg)
+
+
+
+
+  if (command.help.test && !dev) {
     if (message.guild.me.permissionsIn(message.channel).has(Discord.Permissions.FLAGS["EMBED_LINKS"])) {
-      message.reply({ embeds: [blackembde] })
-      } else {
-        message.reply()
-      }
+      message.reply({ embeds: [{ description: i18n.__("messageCreate.test") }] })
       return;
-    }*/
 
-
-
-    if (command.help.test && !dev) {
+    } else {
       message.reply(i18n.__("messageCreate.test"))
       return;
     }
-    if (command.help.category == "devs" && !dev) {
+    return;
+  }
+  if (command.help.category == "devs" && !dev) {
+    return;
+  }
+  console.log(chalk`{green.bold ${message.author.tag}} has used {red.bold ${command.help.name}} in {blue.bold ${message.guild.name}}`)
+
+  let embed = new Discord.MessageEmbed()
+    .setAuthor(message.author.tag, message.author.displayAvatarURL({ format: 'png', dynamic: true }))
+    .setDescription(`${message.author.tag} has used ${command.help.name} in ${message.guild.name}`)
+    .setTimestamp()
+  client.logs.send({ embeds: [embed] })
+
+
+
+
+
+  if (db.get("devonly") && !dev) {
+    if (message.guild.me.permissionsIn(message.channel).has(Discord.Permissions.FLAGS["EMBED_LINKS"])) {
+      message.reply({ embeds: [{ description: i18n.__("messageCreate.devonly") }] })
       return;
-    }
-    console.log(chalk`{green.bold ${message.author.tag}} has used {red.bold ${command.help.name}} in {blue.bold ${message.guild.name}}`)
 
-    let embed = new Discord.MessageEmbed()
-      .setAuthor(message.author.tag, message.author.displayAvatarURL({ format: 'png', dynamic: true }))
-      .setDescription(`${message.author.tag} has used ${command.help.name} in ${message.guild.name}`)
-      .setTimestamp()
-    client.logs.send({ embeds: [embed] })
-
-
-
-
-
-    if (db.get("devonly") && !dev) {
+    } else {
       message.reply(i18n.__("messageCreate.devonly"))
       return;
     }
-
+    return;
   }
+
+
   if (!cooldowns.has(command.help.name)) {
     const coll = new Discord.Collection()
     cooldowns.set(command.help.name, coll)
   }
   const current_time = Date.now();
   const time_stamps = cooldowns.get(command.help.name);
-  var cooldown_amount = (command.help.cooldown) * 1000
+  var cooldown_amount = isNaN(command.help.cooldown) ? ms(command.help.cooldown || "1s") : command.help.cooldown * 1000
 
   if (time_stamps.has(message.author.id) && !dev) {
     const expiration_time = time_stamps.get(message.author.id) + cooldown_amount;
     if (current_time < expiration_time) {
 
-      const time_left = pms(expiration_time - current_time)
-      return message.reply(`**Please wait \`${time_left}\` 🕒**`).then(msg => {
-        setTimeout(() => msg.delete()
-          , cooldown_amount);
-      })
+      const time_left = ms(expiration_time - current_time)
+      let msg = await message.reply(i18n.__("messageCreate.cooldown", { time: time_left }))
+
+
+      setTimeout(() => msg.delete()
+        , cooldown_amount);
+
+      return;
+
     }
   }
 

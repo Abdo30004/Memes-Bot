@@ -6,7 +6,7 @@ module.exports = {
       .setDescription("** أول بوت ميمز عربي :pineapple:**")
       .addField("**Website**", `[**Click here**](${client.config.site})`)
       .addField("**Invite**", `[**Click here**](${client
-        .generateInvite({ scopes: ["applications.commands", "bot"], permissions: '116800' })})`)
+        .generateInvite({ scopes: ["applications.commands", "bot"], permissions: '379968' })})`)
       .addField("**Support**", `[**Click here**](https://discord.gg/5J53eVXYXA)`)
       .setImage("https://media.discordapp.net/attachments/836854460285583362/837677135564505088/qr-code_2.png?width=406&height=406")
       .setThumbnail(client.config.png)

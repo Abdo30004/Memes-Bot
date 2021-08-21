@@ -22,7 +22,7 @@ module.exports = async (client) => {
       if (guild.me.permissionsIn(channel).has(Discord.Permissions.FLAGS[permission])) {
         continue;
       }
-      channel.send(i18n.__("ready.permission", { permission })).catch(console.error)
+      channel.send(i18n.__("ready.permission", { permission })).catch(err=>null)
       continue loop1;
     }
     const interval = setInterval(async () => {

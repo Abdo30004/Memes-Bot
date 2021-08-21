@@ -20,7 +20,7 @@ module.exports = {
       .setThumbnail(client.user.displayAvatarURL({ format: "png" }))
       .setFooter(`Requested by ${message.author.tag}`, message.author.displayAvatarURL({ dynamic: true, format: "png" }))
       .setColor("#f0d50c")
-      message.reply({ embeds: [embed] })
+    message.reply({ embeds: [embed] })
 
   }
 }
