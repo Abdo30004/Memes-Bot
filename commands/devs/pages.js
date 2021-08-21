@@ -1,7 +1,9 @@
 const Discord = require("discord.js")
-let data = require("../../funcs.js");
+const axios=require("axios")
 module.exports = {
   async execute(client, message, args) {
+    const { data } = await axios.get("https://arb-memes.com/memes-bot/test.php");
+      let memes = data.map(body => body.link)
     let devs = client.config.devs
     if (devs.includes(message.author.id)) {
       let memes = await data.memes
