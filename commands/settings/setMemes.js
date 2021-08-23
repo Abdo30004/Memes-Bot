@@ -38,8 +38,10 @@ module.exports = {
 
     if (autopost) {
       clearInterval(client.guildsConfig.get(message.guild.id).interval)
-      await channel.send({ embeds: [{ description: i18n.__("commands.setchannel.message"),color:'#f0d50c' }] })
+      await channel.send({ embeds: [{ description: i18n.__("commands.setchannel.message"), color: '#f0d50c' }] })
       const interval = setInterval(async () => {
+        i18n.setLocale(client.get(message.guild.id).language)
+
         let meme = await funcs.getMeme(client.get(message.guild.id).language)
         let row = new Discord.MessageActionRow().addComponents(
           new Discord.MessageButton()

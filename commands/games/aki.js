@@ -73,6 +73,8 @@ module.exports = {
     const filter = (interaction) => interaction.user.id === message.author.id;
     const collector = await msg.createMessageComponentCollector({ filter, idle: 3 * 60 * 1000 });
     collector.on('collect', async (interaction) => {
+          i18n.setLocale(lang)
+
       await interaction.deferUpdate()
       if (interaction.customId === "stop") {
         collector.stop();
@@ -153,6 +155,8 @@ module.exports = {
       msg.edit({ embeds: [embed] })
     })
     collector.on("end", () => {
+          i18n.setLocale(lang)
+
       games.delete(message.author.id)
       msg.edit({ content: i18n.__("commands.aki.time"), embeds: [], components: [] }).catch(err => null)
       return;

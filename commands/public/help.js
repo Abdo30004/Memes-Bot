@@ -72,8 +72,8 @@ module.exports = {
       .setLabel("Delete")
       .setStyle("DANGER")
       .setEmoji("🗑️")
-      )
-      
+    )
+
 
 
     if (!args[0]) {
@@ -98,6 +98,8 @@ __Categories :__
       let filter = (interaction) => interaction
       const collector = msg.createMessageComponentCollector({ filter, idle: 3 * 60 * 1000 })
       collector.on("collect", async (interaction) => {
+        i18n.setLocale(lang)
+
         if (interaction.user.id !== message.author.id) {
           await interaction.deferReply({ ephemeral: true });
         } else {
