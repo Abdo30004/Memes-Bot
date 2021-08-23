@@ -18,5 +18,4 @@ for (const guild of guilds){
 
 
 }
-console.log(client.guildsConfig)
 }
