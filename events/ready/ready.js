@@ -21,9 +21,11 @@ module.exports = async (client) => {
   console.table(info);
 
   setInterval(() => {
-        var status="-help";
+        let status="EmoBot 🤍"//"-help";
     client.user.setActivity(status, { type: "PLAYING" });
   }, 5000)
+
+
   let embed = new Discord.MessageEmbed()
     .setTitle("**I AM READY**")
     .setColor("BLUE")
