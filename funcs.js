@@ -5,7 +5,7 @@ const getVideo = async (lang = "ar") => {
   var video;
   switch (lang) {
     case "ar": {
-      const { data } = await axios.get("secret link");
+      const { data } = await axios.get("https://arb-memes.com/memes-bot/json_video.php");
       let videos = data.map(body => body.link)
       video = videos[Math.floor(Math.random() * videos.length)]
       break;
@@ -23,7 +23,7 @@ const getMeme = async (lang = "ar") => {
   var meme;
   switch (lang) {
     case "ar": {
-      const { data } = await axios.get("secret link");
+      const { data } = await axios.get("https://arb-memes.com/memes-bot/test.php");
       let memes = data.map(body => body.link)
       meme = memes[Math.floor(Math.random() * memes.length)];
       break;
