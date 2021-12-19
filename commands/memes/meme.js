@@ -10,7 +10,7 @@ module.exports = {
         .setStyle("LINK")
         .setLabel(i18n.__("commands.meme.button"))
         .setURL(meme)
-        .setEmoji("851856874458054726")
+        .setEmoji("🔻")
     )
     var membed = new Discord.MessageEmbed()
 
