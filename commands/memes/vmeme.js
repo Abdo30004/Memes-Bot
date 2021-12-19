@@ -12,7 +12,7 @@ module.exports = {
         .setStyle("LINK")
         .setLabel(i18n.__("commands.meme.button"))
         .setURL(video)
-        .setEmoji("851856874458054726")
+        .setEmoji("🔻")
     )
 
     await message.reply({ files: [attach], components: [row] });
