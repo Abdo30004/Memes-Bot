@@ -87,7 +87,7 @@ __Categories :__
 **\`${i18n.__("commands.help.memes.label")}\`** : 😂 
 **\`${i18n.__("commands.help.fun.label")}\`** : ✨ 
 **\`${i18n.__("commands.help.games.label")}\`** : 🎮 
-**\`${i18n.__("commands.help.filters.label")}\`** :
+**\`${i18n.__("commands.help.filters.label")}\`** : <:filters:853250920879882301>
 **\`${i18n.__("commands.help.settings.label")}\`** : ⚙️
 
 `).setFooter(`${prefix}help`, client.user.displayAvatarURL({ format: "png" })).setTimestamp().setColor("#f0d50c")
