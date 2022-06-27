@@ -21,7 +21,7 @@ module.exports = async (client) => {
   console.table(info);
 
   setInterval(() => {
-        let status="-help | EmoBot 🤍"//"-help";
+        let status="-help"//"-help";
     client.user.setActivity(status, { type: "PLAYING" });
   }, 5000)
 
