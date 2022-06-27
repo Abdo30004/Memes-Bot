@@ -4,6 +4,7 @@ const Discord = require('discord.js');
 const db = require("quick.db")
 const random = require('random');
 const chalk = require("chalk");
+const fetch=require("node-fetch")
 module.exports = async (client) => {
   //console.clear()
   figlet('Memes Bot', { font: "Banner" }, async function (err, data) {
@@ -22,6 +23,7 @@ module.exports = async (client) => {
 
   setInterval(() => {
         let status="-help"//"-help";
+fetch("https://memes-bot-1.herokuapp.com/")
     client.user.setActivity(status, { type: "PLAYING" });
   }, 5000)
 
